@@ -1,0 +1,35 @@
+<?php
+
+	HeadScript('added_css', 'pins.css');
+
+?>
+
+<?php 
+	foreach($this->aggregated as $aggregated):
+		$first_activity = current($aggregated->get('activities'));
+?>
+	<div class="well aggregation">
+		<div class="title clearfix">
+			<div class="pull-left">
+				<?= count($aggregated->get('activities')); ?> <?= $first_activity->get('verb')->infinitive; ?>s
+			</div>
+			<small class="pull-right">Updated <?= $this->utils()->ago($aggregated->get('updated_at') / 1000); ?></small>
+		</div><br />
+		<div class="">
+			<?php foreach($aggregated->get('activities') as $activity):
+				$item = $this->items[$activity->get('extra_context')['item_id']];
+			?>
+				<div class="pin">
+					<div>
+						<div class="pin-img-holder">
+							<img src="/<?= $item['url']; ?>" />
+						</div>
+						<div class="pin-bottom"><?= $activity->get('verb')->past_tense; ?> by <a href="<?= $this->url(array('controller' => 'profile', 'action' => $activity->get('actor_id')), 'default', true); ?>"><?= Model_User::getName($activity->get('actor_id')); ?></a>
+							<?= $this->utils()->ago($activity->get('time') / 1000); ?>
+						</div>
+					</div>
+				</div>
+			<?php endforeach; ?>
+		</div>
+	</div>
+<?php endforeach;

@@ -1,0 +1,57 @@
+.container-pins {
+	-webkit-column-count: 4; /* Chrome, Safari, Opera */
+    -moz-column-count: 4; /* Firefox */
+    column-count: 4;
+}
+
+.container-pins .pin,
+.aggregation .pin {
+	background: none repeat scroll 0 0 #fff;
+    box-shadow: 0 1px 7px 2px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    margin: 0 0 15px;
+    transition: all 0.2s ease 0s;
+}
+.container-pins .pin img {
+	width: 100%;
+}
+
+.container-pins .pin .pin-caption {
+    color: #555555;
+    font-size: 12px;
+    line-height: 17px;
+    padding: 15px 15px 0;
+    word-wrap: break-word;
+}
+
+.container-pins .pin .pin-bottom,
+.aggregation .pin .pin-bottom {
+	padding: 15px;
+}
+.container-pins .pin .pin-bottom {
+	text-align: right;
+}
+
+.aggregation .pin {
+	border: 1px solid #eee;
+    box-shadow: none;
+    margin-right: 15px;
+    max-width: 270px
+}
+.aggregation .pin-img-holder {
+	max-height: 270px;
+    width: auto;
+
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+    overflow: hidden;
+    width: 100%;
+}
+.aggregation .pin-img-holder img {
+	height: auto;
+    max-width: 100%;
+    width: auto;
+}
+.flat img {
+	max-height: 400px;
+}

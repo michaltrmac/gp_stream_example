@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule (.*/?)(.*css)$ combine.php?type=css&files=$1$2 [NC,L]
+RewriteRule (.*/?)(.*js)$ combine.php?type=js&files=$1$2 [NC,L]

@@ -1,0 +1,30 @@
+SetEnv APPLICATION_ENV development
+#SetEnv APPLICATION_ENV production
+
+#AddOutputFilterByType INCLUDES text/html
+#<ifmodule mod_expires.c>
+#    <filesmatch "\.(jpg|JPG|gif|GIF|png|PNG|css|ico)$">
+#        ExpiresActive on
+#        ExpiresDefault "access plus 7 day"
+#    </filesmatch>
+#</ifmodule>
+
+RewriteEngine On
+
+# prevents files starting with dot to be viewed by browser
+RewriteRule /\.|^\. - [F]
+
+# Redirect to www
+#RewriteCond %{REQUEST_METHOD} !^(POST)
+RewriteCond %{HTTP_HOST} ^([^.]*)\.([^.]*)$
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,QSA,L]
+
+RewriteRule (.*/?)(.*css)$ combine.php?type=css&files=$1$2 [NC,L]
+RewriteRule (.*/?)(.*js)$ combine.php?type=js&files=$1$2 [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+
+RewriteRule ^.*$ index.php [NC,L]

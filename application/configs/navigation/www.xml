@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<nav>
+		<home>
+			<label>Home</label>
+			<homepage>true</homepage>
+			<controller>index</controller>
+			<action>index</action>
+			<route>default</route>
+		</home>
+		<flat>
+			<label>Flat Feed</label>
+			<controller>feed</controller>
+			<action>flat</action>
+		</flat>
+		<aggregated>
+			<label>Aggregated Feed</label>
+			<controller>feed</controller>
+			<action>aggregated</action>
+		</aggregated>
+		<users>
+			<label>Users</label>
+			<controller>profile</controller>
+			<action>list</action>
+		</users>
+	</nav>
+</config>

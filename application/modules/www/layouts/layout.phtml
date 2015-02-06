@@ -1,0 +1,42 @@
+<?php
+
+HeadScript('default_css');
+HeadScript('default_js');
+
+$js = $js_base = '';
+if (APPLICATION_ENV == 'development')
+	$js_base .= 'window._env = "'.APPLICATION_ENV.'";';
+
+if (config('domain'))
+	$js_base .= 'window.domain = "'.config('domain').'";';
+
+?>
+
+<?= $this->doctype(); //doctype is defined in Bootstrap::_initViewHelpers() (in application/Bootstrap.php file) ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<?php echo $this->headMeta(); ?>
+		<?php echo $this->headTitle(); ?>
+		-combiner_css-
+		<?php if (!empty($js_base)): ?>
+			<script type="text/javascript" charset="utf-8"><?= $js_base; ?></script>
+		<?php endif; ?>
+		-combiner_js-
+		<script type="text/javascript" charset="utf-8">@simplejs</script>
+		-onDomReady-
+	</head>
+	<body>
+		<div class="container">
+			<?= $this->layout()->render('header'); ?>
+			<div class="well well-small"><b>Current User: <?= Model_User::getName(Model_User::getId()); ?></b></div>
+			<div class="content">
+				<?= $this->layout()->content; ?>
+			</div>
+			<?= $this->layout()->render('footer'); ?>
+		</div>
+	</body>
+</html>
+
+<?php
+	Gp_FinalReplacer::getInstance()->set('simplejs','.='.$js);
+?>

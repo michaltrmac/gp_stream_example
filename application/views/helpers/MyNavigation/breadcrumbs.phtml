@@ -1,0 +1,66 @@
+<?php
+
+if (null === $this->container) {
+    $this->container = $this->breadcrumbs()->getContainer();
+}
+
+// find deepest active
+$active = $this->breadcrumbs()->findActive($this->container, 0);
+if (!$active) {
+    return '';
+}
+
+$active = $active['page'];
+
+// put the deepest active page last in breadcrumbs
+if ($this->breadcrumbs()->getLinkLast()) {
+    $html = ' <li class="current'.($active->homepage ? ' hp' : '').'"><span>' . $this->breadcrumbs()->htmlify($active) . '</span></li>' . PHP_EOL;
+} else {
+    $html = $active->getLabel();
+    if ($this->breadcrumbs()->getUseTranslator() && $t = $this->breadcrumbs()->getTranslator()) {
+        $html = $t->translate($html);
+    }
+    $html = ' <li class="current'.($active->homepage ? ' hp' : '').'"><span>'.$this->escape($html).'</span></li>' . PHP_EOL;
+}
+
+// walk back to root
+while (($parent = $active->getParent()) != null) {
+    if ($parent instanceof Zend_Navigation_Page && $parent->getLabel()) {
+        // prepend crumb to html
+		$link = $parent->get('linkActive');
+		if (isset($link) && $link === false)
+		{
+			$label = $parent->getLabel();
+			if ($this->breadcrumbs()->getUseTranslator() && $t = $this->breadcrumbs()->getTranslator()) {
+				$label = $t->translate($label);
+			}
+			$html = ' <li><span>'.$this->escape($label).'</span><span class="arrow"></span></li>' . PHP_EOL.$html;
+		}
+		else
+			$html = ' <li '.($parent->homepage ? 'class="hp"' : '').'>'.$this->breadcrumbs()->htmlify($parent).'<span class="arrow"></span></li>' . PHP_EOL . $html;
+    }
+
+    if ($parent === $this->container) {
+        // at the root of the given container
+        break;
+    }
+
+    $active = $parent;
+}
+
+if(!(empty($active)))
+{
+	if($html == '')
+	{
+		$html = $active->getLabel();
+	}
+
+	$homepage = $this->container->findOneBy('homepage', true);
+	if($homepage instanceof Zend_Navigation_Page && !$active->homepage)
+	{
+		$html = '<li class="hp">'.$this->breadcrumbs()->htmlify($homepage).'<span class="arrow"></span></li>' . $html;
+	}
+}
+
+echo strlen($html) ? $this->breadcrumbs()->getIndent() . '<ul id="breadcrumbs" class="breadcrumbs">' . PHP_EOL
+                 . $html .  '</ul>' . PHP_EOL : '';

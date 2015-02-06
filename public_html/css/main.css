@@ -1,0 +1,16 @@
+body {
+    background-color: #eeeeee;
+    color: #333333;
+    font-family: "Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+}
+
+.content .well a {
+	color: #558593 !important;
+	font-weight: bold;
+	text-decoration: none;
+}
+.content .well a:hover {
+	text-decoration: underline;
+}

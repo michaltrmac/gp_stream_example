@@ -1,0 +1,19 @@
+<?php
+
+	HeadScript('added_css', 'pins.css');
+
+?>
+
+<div class="container-pins">
+	<?php foreach($this->items as $item): ?>
+		<div class="pin">
+			<div>
+				<img src="/<?= $item['url']; ?>" />
+				<p class="pin-caption"><?= $item[Gp_Attr::DESCRIPTION]; ?></p>
+				<div class="pin-bottom">
+					<a href="<?= $this->url(array('controller' => 'index', 'action' => 'save', 'id' => $item['_id'])); ?>" class="btn btn-primary" />Pin</a>
+				</div>
+			</div>
+		</div>
+	<?php endforeach; ?>
+</div>

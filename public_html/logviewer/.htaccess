@@ -1,0 +1,19 @@
+SetEnvIf X-Forwarded-For ^99\.192\.226\.195$ let_me_in
+SetEnvIf X-Forwarded-For ^75\.84\.157\.93$ let_me_in
+SetEnvIf X-Forwarded-For ^108\.185\.198\.117$ let_me_in
+SetEnvIf X-Forwarded-For ^62\.245\.118\.157 let_me_in
+SetEnvIf X-Forwarded-For ^68\.232\.115\.184 let_me_in
+SetEnvIf X-Forwarded-For ^94\.113\.100\.5 let_me_in
+SetEnvIf X-Forwarded-For ^94\.113\.100\.151 let_me_in
+
+SetEnvIf Remote_Addr ^99\.192\.226\.195$ let_me_in
+SetEnvIf Remote_Addr ^75\.84\.157\.93$ let_me_in
+SetEnvIf Remote_Addr ^108\.185\.198\.117$ let_me_in
+SetEnvIf Remote_Addr ^62\.245\.118\.157 let_me_in
+SetEnvIf Remote_Addr ^68\.232\.115\.184 let_me_in
+SetEnvIf Remote_Addr ^94\.113\.100\.5 let_me_in
+SetEnvIf Remote_Addr ^94\.113\.100\.151 let_me_in
+
+#Order deny,allow
+#Deny from all
+#Allow from env=let_me_in

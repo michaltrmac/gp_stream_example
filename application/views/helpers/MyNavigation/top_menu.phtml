@@ -1,0 +1,89 @@
+<?php
+
+$html = array('<div class="navbar-inner">');
+$eol = PHP_EOL;
+
+$iterator = new RecursiveIteratorIterator($this->container, RecursiveIteratorIterator::SELF_FIRST);
+$prevDepth = -1;
+$prevGroup = '';
+$minDepth = 0;
+$view = getView();
+
+foreach ($iterator as $page)
+{
+	$liClass = $class = $divClass = array();
+	$depth = $iterator->getDepth();
+	$group = $page->get('group');
+//	$layoutColor = $page->get('layoutColor');
+	if ($depth < $minDepth)
+		continue;
+
+	$isActive = $page->isActive(true);
+
+//	if ($isActive && $layoutColor)
+//		$view->layoutColor = $layoutColor;
+
+	$liClass[] = ($depth == 0 ? strtolower(Gp_String::word2link($page->getLabel())).' top' : '');
+	if (($depth > $prevDepth) || ($prevGroup != $group && $depth == 0)) {
+		$class[] = ($depth == 0 ? 'nav' : '');
+		$class[] = ($depth > 0 ? 'sub' : '');
+		$class[] = ($depth == 1 ? 'col' : '');
+		if ($prevGroup != $group && $depth == 0)
+		{
+			if (!empty($group))
+			{
+				$divClass[] = 'left group-'.$group;
+//				$liClass[] = 'group-'.$group;
+			}
+
+			for ($i = $prevDepth; $i >= $minDepth; $i--) {
+				$html [] = '</li>';
+				$html [] = '</ul>';
+				if ($i <= $minDepth)
+					$html[] = '</div>';
+			}
+//			$html[] = '</ul>';
+			$prevGroup = $group;
+		}
+		if ($depth == 0)
+			$html[] = '<div '.(!empty($divClass) ? 'class="'.implode(' ', array_filter($divClass)).'"' : '').'>';
+
+		$html[] = '<ul class="'.implode(' ', array_filter($class)).'">';
+	}
+	else if ($prevDepth > $depth) {
+		for ($i = $prevDepth; $i > $depth; $i--) {
+			$html[] = '</li>';
+			$html[] = '</ul>';
+		}
+		$html[] = '</li>';
+	}
+	else {
+		$html[] = '</li>';
+	}
+
+	if ($page->haspages() && $page->getClass())
+	{
+		$liClass[] = $page->getClass();
+	}
+	if ($page->get('liClass'))
+		$liClass[] = $page->get('liClass');
+	$liClass[] = $isActive ? 'active' : '';
+
+	$liClass = array_filter($liClass);
+	$html[] = '<li' . (!empty($liClass) ? ' class="'.implode(' ', $liClass).'"' : '') . '>';
+	if ($page->getLabel())
+		$html[] = $this->myMenu()->htmlify($page);
+
+	if ($page->moreArrow)
+		$html[] = '<span class="exArrow"></span>';
+
+	$prevDepth = $depth;
+}
+
+for ($i = $prevDepth; $i >= $minDepth; $i--) {
+	$html [] = '</li>';
+	$html [] = '</ul>';
+}
+$html[] = '</div></div>';
+
+echo join($eol, $html);

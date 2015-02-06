@@ -1,0 +1,44 @@
+<?php
+	$request = Zend_Controller_Front::getInstance()->getRequest();
+	$view = Zend_Layout::getMvcInstance()->getView();
+
+	if ($this->pageCount):
+?>
+	<div class="<?= $view->paginatorClass ?>">
+		<ul>
+			<?php
+				$url = '';
+				$dis = '';
+
+				if (isset($this->previous))
+					$url = $this->url(array('action' => $request->action, 'page' => $this->previous));
+				else
+					$dis = 'class="disabled"';
+			?>
+			<li <?= $dis; ?>>
+				<a href="<?= $url; ?>" class="btn<?= (!$dis ? ' btn-primary' : ' nl'); ?>">&lt; Prev</a>
+			</li>
+
+			<!-- Numbered page links -->
+			<?php foreach ($this->pagesInRange as $page): ?>
+				<?php $active = ($page == $this->current) ? 'class="active"' : ''; ?>
+				<li <?= $active; ?>>
+					<a href="<?= $this->url(array('action' => $request->action, 'page' => $page)); ?>" class="btn<?= (!$active ? ' btn-primary' : ''); ?>"><?= $page; ?></a>
+				</li>
+			<?php endforeach; ?>
+
+			<?php
+				$url = '';
+				$dis = '';
+
+				if (isset($this->next))
+					$url = $this->url(array('action' => $request->action, 'page' => $this->next));
+				else
+					$dis = 'class="disabled"';
+			?>
+			<li <?= $dis; ?>>
+				<a href="<?= $url; ?>" class="btn<?= (!$dis ? ' btn-primary' : ' nl'); ?>">Next &gt;</a>
+			</li>
+		</ul>
+	</div>
+<?php endif; ?>

@@ -1,0 +1,23 @@
+<?php
+
+	HeadScript('added_css', 'pins.css');
+
+?>
+
+<div class="container-pins">
+	<?php foreach($this->users as $id => $user): ?>
+		<div class="pin" style="width: 100%;">
+			<div>
+				<center>
+					<p class="pin-caption">
+						<b><?= $user; ?></b>
+					</p>
+				</center>
+				<div class="pin-bottom">
+					<a href="<?= $this->url(array('controller' => 'profile', 'action' => 'switch', 'id' => $id), 'default', true); ?>" class="btn btn-danger pull-left">Swith to user</a>
+					<a href="<?= $this->url(array('controller' => 'profile', 'action' => 'follow', 'id' => $id), 'default', true); ?>" class="btn btn-primary">Follow</a>
+				</div>
+			</div>
+		</div>
+	<?php endforeach; ?>
+</div>
