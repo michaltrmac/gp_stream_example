@@ -14,8 +14,14 @@
 					</p>
 				</center>
 				<div class="pin-bottom">
-					<a href="<?= $this->url(array('controller' => 'profile', 'action' => 'switch', 'id' => $id), 'default', true); ?>" class="btn btn-danger pull-left">Swith to user</a>
-					<a href="<?= $this->url(array('controller' => 'profile', 'action' => 'follow', 'id' => $id), 'default', true); ?>" class="btn btn-primary">Follow</a>
+					<?php if (Model_User::getId() != $id): ?>
+						<a href="<?= $this->url(array('controller' => 'profile', 'action' => 'switch', 'id' => $id), 'default', true); ?>" class="btn btn-primary pull-left">Swith to user</a>
+						<?php if (in_array($id, $this->consumers)): ?>
+							<a href="<?= $this->url(array('controller' => 'profile', 'action' => 'unfollow', 'id' => $id), 'default', true); ?>" class="btn btn-danger">Unfollow</a>
+						<?php else: ?>
+							<a href="<?= $this->url(array('controller' => 'profile', 'action' => 'follow', 'id' => $id), 'default', true); ?>" class="btn btn-success">Follow</a>
+						<?php endif; ?>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>

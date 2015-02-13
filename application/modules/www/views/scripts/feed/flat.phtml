@@ -10,7 +10,7 @@
 			<?= Model_User::getName($activity->get('actor_id')); ?>
 		</a>
 		<?= $activity->get('verb')->past_tense; ?> picture<br />
-		<small><?= $this->utils()->ago($activity->get('time') / 1000); ?></small>
+		<small><?= /*$this->utils()->ago(*/date('H:i:s d.m.Y', $activity->get('time') / 1000); ?></small>
 		<center>
 			<img src="/<?= $this->items[$activity->get('extra_context')['item_id']]['url']; ?>" />
 		</center>

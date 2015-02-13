@@ -44,7 +44,13 @@ class Model_Pin_Manager extends Gp_Stream_Feed_Manager
 
 	final protected function getUserFollowerIds($user_id)
 	{
-		return array(Gp_Stream_Fanout_Priority::HIGH => array($user_id));
+		$followers = iterator_to_array(Model_Follow::getInstance()->getFollowers($user_id));
+
+		$users = array($user_id);
+		foreach ($followers as $follower)
+			array_push ($users, $follower[Gp_Attr::USER]);
+
+		return array(Gp_Stream_Fanout_Priority::HIGH => $users);
 	}
 
 }

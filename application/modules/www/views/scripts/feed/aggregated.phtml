@@ -13,7 +13,7 @@
 			<div class="pull-left">
 				<?= count($aggregated->get('activities')); ?> <?= $first_activity->get('verb')->infinitive; ?>s
 			</div>
-			<small class="pull-right">Updated <?= $this->utils()->ago($aggregated->get('updated_at') / 1000); ?></small>
+			<small class="pull-right">Updated <?= /*$this->utils()->ago(*/date('H:i:s d.m.Y', $aggregated->get('updated_at') / 1000); ?></small>
 		</div><br />
 		<div class="">
 			<?php foreach($aggregated->get('activities') as $activity):
@@ -25,7 +25,7 @@
 							<img src="/<?= $item['url']; ?>" />
 						</div>
 						<div class="pin-bottom"><?= $activity->get('verb')->past_tense; ?> by <a href="<?= $this->url(array('controller' => 'profile', 'action' => $activity->get('actor_id')), 'default', true); ?>"><?= Model_User::getName($activity->get('actor_id')); ?></a>
-							<?= $this->utils()->ago($activity->get('time') / 1000); ?>
+							<?= /*$this->utils()->ago(*/date('H:i:s d.m.Y', $activity->get('time') / 1000); ?>
 						</div>
 					</div>
 				</div>

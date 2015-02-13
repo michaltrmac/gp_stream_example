@@ -29,8 +29,8 @@ class Model_Install_Mongo extends Gp_Mongo_Abstract
 		dump('Creating new collections ...');
 
 		$this->createItemsCollection();
+		$this->createFollowersCollection();
 
-		dump('Create indexes....');
 		$this->createIndexes();
 
 		dump('Mongo DONE!!!');
@@ -58,8 +58,16 @@ class Model_Install_Mongo extends Gp_Mongo_Abstract
 		}
 	}
 
+	final private function createFollowersCollection()
+	{
+		dump('Create collection Followers ...');
+	}
+
 	final public function createIndexes()
 	{
+		dump('Create indexes....');
+
+		$this->collection('Followers')->ensureIndex(array(Gp_Attr::USER => 1, 'fid' => 1), array('unique' => true));
 	}
 
 }
