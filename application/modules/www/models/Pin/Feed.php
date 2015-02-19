@@ -12,6 +12,6 @@ class Model_Pin_Feed extends Gp_Stream_Feed_Cassandra
 	protected $key_format = 'feed:flat:%s';
 
 	/** @var string - the name of the column family */
-	protected $timeline_cf_name = 'example';
+	protected $timeline_cf_name = 'timeline';
 
 }

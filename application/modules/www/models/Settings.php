@@ -18,15 +18,15 @@ class Model_Settings extends Gp_Stream_Settings
 //			'port' => 123456
 //		)
 //	);
-	protected static $cassandra_hosts = '192.168.1.13';
+	protected static $cassandra_hosts = null;
 
-	protected static $default_keyspace = 'GpSfre';
+	protected static $default_keyspace = null;
 
 	/** @var array - fanout task cron mongo settings */
 	protected static $fanout_task_cron_mongo = array(
 		'name' => 'FanoutTasks',
-		'address' => '192.168.1.13',
-		'dbname' => 'Gp_Stream',
+		'address' => null,
+		'dbname' => null,
 		'collection' => 'FanoutTasks',
 		'params' => array(),
 	);
@@ -39,6 +39,14 @@ class Model_Settings extends Gp_Stream_Settings
 
 	public static function init()
 	{
+		$config = config('cassandra', 'default');
+
+		self::$cassandra_hosts = $config['address'];
+		self::$default_keyspace = $config['dbname'];
+
+		self::$fanout_task_cron_mongo['address'] = config('mongoAdapter', 'default', 'address');
+		self::$fanout_task_cron_mongo['dbname'] = config('mongoAdapter', 'default', 'dbname');
+
 		if (!self::$is_inited)
 		{
 			parent::init();

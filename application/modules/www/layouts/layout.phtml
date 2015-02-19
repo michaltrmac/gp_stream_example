@@ -28,7 +28,17 @@ if (config('domain'))
 	<body>
 		<div class="container">
 			<?= $this->layout()->render('header'); ?>
-			<div class="well well-small"><b>Current User: <?= Model_User::getName(Model_User::getId()); ?></b></div>
+			<div class="user-container well well-small">
+				<b>Current User: <?= Model_User::getName(Model_User::getId()); ?></b>
+				<?php $notification_count = Model_Pin_Manager::getInstance()->getFeedByType(Model_User::getId(), 'notification')->getDenormalizedCount(); ?>
+				<?php if ($notification_count > 0): ?>
+					<div class="pull-right">
+						Unseen Notifications: <a href="<?= $this->url(array('controller' => 'feed', 'action' => 'notification'), 'default', true); ?>" class="badge badge-important">
+							<?= $notification_count; ?>
+						</a>
+					</div>
+				<?php endif; ?>
+			</div>
 			<div class="content">
 				<?= $this->layout()->content; ?>
 			</div>

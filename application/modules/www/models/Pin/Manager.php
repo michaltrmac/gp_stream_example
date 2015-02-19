@@ -14,6 +14,7 @@ class Model_Pin_Manager extends Gp_Stream_Feed_Manager
 	protected $feed_classes = array(
 		'flat' => 'Model_Pin_Feed',
 		'aggregated' => 'Model_Pin_Feed_Aggregated',
+		'notification' => 'Model_Pin_Feed_Notification',
 	);
 
 	protected $user_feed_class = 'Model_Pin_Feed_User';

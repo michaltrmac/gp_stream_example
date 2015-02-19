@@ -14,3 +14,7 @@ body {
 .content .well a:hover {
 	text-decoration: underline;
 }
+
+.container .user-container a {
+	text-decoration: none;
+}

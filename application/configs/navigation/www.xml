@@ -18,6 +18,11 @@
 			<controller>feed</controller>
 			<action>aggregated</action>
 		</aggregated>
+		<notification>
+			<label>Notification Feed</label>
+			<controller>feed</controller>
+			<action>notification</action>
+		</notification>
 		<users>
 			<label>Users</label>
 			<controller>profile</controller>

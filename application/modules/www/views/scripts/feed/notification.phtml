@@ -1,0 +1,28 @@
+<?php
+
+	HeadScript('added_css', 'pins.css');
+
+?>
+
+<?php
+	foreach($this->activities as $aggregated):
+		$group = $aggregated->get('group');
+		$parts = explode('-', $group);
+		$verb_id = (int)$parts[0];
+		$verb = Gp_Stream_Verb::getById($verb_id);
+		$actor_id = (int)$parts[1];
+		$actor = Model_User::getName($actor_id);
+?>
+	<div class="well aggregation">
+		<div class="title clearfix">
+			<div class="pull-left">
+				<?= $actor; ?> <?= $verb->past_tense; ?> <?= count($aggregated->get('activities')); ?> photos <?= $this->utils()->ago($aggregated->get('updated_at') / 1000); ?>
+			</div>
+			<div class="pull-right">
+				<?php if (!$aggregated->isRead()): ?>
+					<a href="<?= $this->url(array('controller' => 'feed', 'action' => 'mark-as-read', 'id' => $aggregated->getSerializationId()), 'default', true); ?>">Mark as read</a>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+<?php endforeach;
